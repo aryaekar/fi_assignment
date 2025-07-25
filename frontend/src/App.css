@@ -1,0 +1,226 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #3182ce;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0;
+}
+.link-btn:hover {
+  color: #2b6cb0;
+}
+.success-message {
+  color: #38a169;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.centered-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+.auth-card {
+  background: #fff;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  min-width: 340px;
+  max-width: 95vw;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.auth-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  margin-bottom: 0.5rem;
+}
+.auth-input {
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  background: #f7fafc;
+  transition: border 0.2s;
+}
+.auth-input:focus {
+  border: 1.5px solid #3182ce;
+  outline: none;
+}
+.auth-btn {
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 0;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+.auth-btn:disabled {
+  background: #90cdf4;
+  cursor: not-allowed;
+}
+.auth-btn:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.product-list-card {
+  background: #fff;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  margin-top: 2.5rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.product-list-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.product-table-wrapper {
+  overflow-x: auto;
+}
+.product-input {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #f7fafc;
+  margin-right: 0.2rem;
+}
+.product-btn {
+  background: #38a169;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.2rem;
+  transition: background 0.2s;
+}
+.product-btn:hover {
+  background: #2f855a;
+}
+.update-qty-form {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  min-width: 340px;
+  max-width: 95vw;
+  animation: modalIn 0.18s cubic-bezier(.4,0,.2,1);
+}
+@keyframes modalIn {
+  from { transform: translateY(40px) scale(0.98); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.app-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.aesthetic-title {
+  flex: 1;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2b6cb0;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(49,130,206,0.08);
+  margin: 0;
+}
+.aesthetic-logout {
+  color:red;
+  background:white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(229,62,62,0.08);
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  margin-left: auto;
+  margin-right: 0;
+}
+.aesthetic-logout:hover {
+  background:red;
+  color:white;
+  box-shadow: 0 4px 16px rgba(229,62,62,0.16);
+}
