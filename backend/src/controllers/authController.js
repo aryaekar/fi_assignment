@@ -39,3 +39,23 @@ export async function login(req, res, next) {
     next(err);
   }
 }
+
+export async function demoLogin(req, res, next) {
+  try {
+    // Create a demo token with predefined demo user credentials
+    const demoUser = {
+      id: 'demo',
+      username: 'demo_user'
+    };
+    
+    const token = jwt.sign(
+      { user_id: demoUser.id, username: demoUser.username }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '1h' }
+    );
+    
+    res.json({ access_token: token });
+  } catch (err) {
+    next(err);
+  }
+}

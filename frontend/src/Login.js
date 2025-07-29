@@ -22,6 +22,18 @@ export default function Login({ onLogin }) {
     setLoading(false);
   };
 
+  const handleDemoLogin = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const res = await axios.post(`${API_URL}/demo-login`);
+      onLogin(res.data.access_token);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Demo login failed');
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="centered-page">
       <div className="auth-card">
@@ -46,6 +58,14 @@ export default function Login({ onLogin }) {
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
+          </button>
+          <button 
+            type="button" 
+            className="auth-btn demo-btn" 
+            onClick={handleDemoLogin}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Demo Login'}
           </button>
         </form>
       </div>
