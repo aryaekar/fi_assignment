@@ -4,6 +4,8 @@ import { FaTrash } from 'react-icons/fa';
 
 const DEFAULT_IMAGE = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='100%' height='100%' fill='%23ccc'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23666' font-size='10'>No Img</text></svg>";
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+
 export default function ProductList({ token }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +28,7 @@ export default function ProductList({ token }) {
   const loadProducts = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:8080/products');
+      const res = await axios.get(`${API_URL}/products`);
       setProducts(res.data);
     } catch (err) {
       setError('Failed to load products');
@@ -38,7 +40,7 @@ export default function ProductList({ token }) {
     e.preventDefault();
     setAddError('');
     try {
-      await axios.post('http://localhost:8080/products', {
+      await axios.post(`${API_URL}/products`, {
         ...form,
         quantity: Number(form.quantity),
         price: Number(form.price)
@@ -66,7 +68,7 @@ export default function ProductList({ token }) {
       return;
     }
     try {
-      await axios.put(`http://localhost:8080/products/${id}/quantity`, { quantity: Number(editingQty) });
+      await axios.put(`${API_URL}/products/${id}/quantity`, { quantity: Number(editingQty) });
       setProducts(products => products.map(p => p.id === id ? { ...p, quantity: Number(editingQty) } : p));
       setEditingId(null);
     } catch (err) {
@@ -77,7 +79,7 @@ export default function ProductList({ token }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/products/${id}`);
+      await axios.delete(`${API_URL}/products/${id}`);
       setProducts(products => products.filter(p => p.id !== id));
       setDeleteId(null);
     } catch (err) {

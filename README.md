@@ -1,108 +1,180 @@
-# Inventory Backend
+# Inventory Management Backend
 
-A Node.js/Express backend for inventory management with JWT authentication, PostgreSQL, and a documented REST API.
+A comprehensive backend API for inventory management built with Node.js, Express, and PostgreSQL. Features JWT authentication, complete CRUD operations, and full Docker containerization. Includes a React frontend for testing and demonstration.
 
-## Features
-- User registration and login (JWT-based)
-- CRUD for products (with image, description, quantity, price, etc.)
-- Input validation and consistent error handling
-- Swagger/OpenAPI documentation
-- Environment-based config with `.env` and `.env.example`
+## ✨ Backend Features
 
-## Requirements
-- Node.js (v16+ recommended)
-- PostgreSQL database
+- **JWT Authentication**: Secure user registration and login system
+- **Product Management**: Complete CRUD operations for inventory items
+- **Input Validation**: Comprehensive validation using express-validator
+- **Database Integration**: PostgreSQL with proper schema design
+- **API Documentation**: Interactive Swagger UI for testing
+- **Docker Ready**: Containerized for easy deployment
+- **Error Handling**: Centralized error handling middleware
+- **Security**: Password hashing, SQL injection protection, CORS
 
-## Setup
-1. **Clone the repo and install dependencies:**
-   ```sh
-   npm install
-   ```
-2. **Configure environment variables:**
-   - Copy `.env.example` to `.env` and fill in your real credentials.
-   - Example:
-     ```env
-     DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database>?sslmode=require
-     JWT_SECRET=your_jwt_secret
-     PORT=8080
-     ```
-3. **Initialize the database:**
-   - Run the SQL in `db_init.sql` to create tables.
+## 🛠️ Tech Stack
 
-4. **Start the server:**
-   ```sh
-   npm start
-   # or
-   node src/app.js
-   ```
+**Backend**: Node.js, Express, JWT, bcryptjs, PostgreSQL  
+**Documentation**: Swagger UI, OpenAPI 3.0  
+**Deployment**: Docker, Docker Compose  
+**Frontend**: React (for demonstration/testing)
 
-## API Documentation
-- Swagger UI is available at: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
-- See `swagger.yaml` for the OpenAPI spec.
+## 📦 What's Included
 
-## Example API Requests
+- **Backend API** with authentication and product management endpoints
+- **PostgreSQL Database** with automatic schema initialization
+- **Docker Configuration** for backend deployment
+- **API Documentation** with interactive Swagger UI
+- **React Frontend** for testing and demonstration purposes
+- **Environment Configuration** for different deployment scenarios
 
-### Register
-```sh
-curl -X POST http://localhost:8080/register \
-  -H "Content-Type: application/json" \
-  -d '{"username": "testuser", "password": "testpass"}'
+## 🚀 Quick Start (Backend Focus)
+
+**Deploy the backend with Docker:**
+```bash
+git clone <repository-url>
+cd inventory
+
+# Option 1: Backend only with external database
+docker build -t inventory-backend .
+docker run -p 8080:8080 --env-file backend/.env inventory-backend
+
+# Option 2: Complete stack (Backend + Database + Frontend)
+docker-compose up -d
 ```
 
-### Login
-```sh
-curl -X POST http://localhost:8080/login \
-  -H "Content-Type: application/json" \
-  -d '{"username": "testuser", "password": "testpass"}'
+**Access the backend:**
+- 🔧 **Backend API**: http://localhost:8080
+- � **API Documentation**: http://localhost:8080/api-docs
+- 🌐 **Frontend Demo**: http://localhost:3000 (if using docker-compose)
+
+## 🐳 Backend Docker Deployment
+
+### Primary: Backend Container
+```bash
+# Build the backend image
+docker build -t inventory-backend .
+
+# Run with environment file
+docker run -p 8080:8080 --env-file backend/.env inventory-backend
+
+# Or run with environment variables
+docker run -p 8080:8080 \
+  -e DATABASE_URL="postgresql://user:pass@host:5432/db" \
+  -e JWT_SECRET="your_secret" \
+  -e PORT=8080 \
+  inventory-backend
 ```
 
-### Add Product
-```sh
-curl -X POST http://localhost:8080/products \
-  -H "Authorization: Bearer <JWT_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Sample Product",
-    "type": "Electronics",
-    "sku": "SKU123",
-    "quantity": 10,
-    "price": 99.99
-  }'
+### Complete Stack (Backend + Database + Frontend)
+```bash
+# Start all services including database and frontend demo
+docker-compose up -d
+
+# View backend logs
+docker-compose logs backend
+
+# Stop all services
+docker-compose down
 ```
 
-### List Products
-```sh
-curl -X GET http://localhost:8080/products \
-  -H "Authorization: Bearer <JWT_TOKEN>"
+## 📋 API Endpoints
+
+### Authentication
+- `POST /register` - Create new user account
+- `POST /login` - User login (returns JWT token)
+
+### Products (Requires Authentication)
+- `GET /products` - List all products (with pagination)
+- `POST /products` - Create new product
+- `PUT /products/:id/quantity` - Update product quantity
+- `DELETE /products/:id` - Delete product
+
+### Documentation
+- `GET /api-docs` - Interactive Swagger UI
+
+## 🗄️ Database Schema
+
+**Users Table:**
+- `id` (Primary Key)
+- `username` (Unique)
+- `password_hash`
+
+**Products Table:**
+- `id` (Primary Key)
+- `name`, `type`, `sku` (Unique)
+- `description`, `image_url`
+- `quantity`, `price`
+
+## 🔧 Configuration
+
+### Environment Variables
+
+**Backend (.env):**
+```env
+DATABASE_URL=postgresql://username:password@host:port/database
+JWT_SECRET=your_jwt_secret_key
+PORT=8080
 ```
 
-### Update Product Quantity
-```sh
-curl -X PUT http://localhost:8080/products/1/quantity \
-  -H "Authorization: Bearer <JWT_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{"quantity": 20}'
+**Frontend (.env):**
+```env
+REACT_APP_API_URL=http://localhost:8080
 ```
 
-### Delete Product
-```sh
-curl -X DELETE http://localhost:8080/products/1 \
-  -H "Authorization: Bearer <JWT_TOKEN>"
+### Docker Compose Configuration
+The `docker-compose.yml` includes:
+- PostgreSQL database with persistent storage
+- Backend API with environment configuration
+- Frontend served via Nginx
+- Custom network for secure communication
+
+## 🚦 Usage
+
+1. **Register**: Create a new user account
+2. **Login**: Authenticate to access the inventory
+3. **Add Products**: Create new inventory items with details
+4. **Manage Inventory**: Update quantities, edit details, delete items
+5. **API Access**: Use the backend API directly via Swagger docs
+
+## 🛡️ Security Features
+
+- JWT token-based authentication
+- Password hashing with bcryptjs
+- Input validation on all endpoints
+- SQL injection protection
+- CORS configuration
+- Environment-based secrets
+
+## 🔍 Troubleshooting
+
+**Container Issues:**
+```bash
+# Check container status
+docker-compose ps
+
+# View logs
+docker-compose logs [service-name]
+
+# Restart services
+docker-compose restart
 ```
 
-## Test Server API
-- To run the server with a test config, create a `.env.test` file (see `.env.example`).
-- Start the test server with:
-  ```sh
-  NODE_ENV=test node src/app.js
-  # or (if you add a script)
-  npm run test-server
-  ```
+**Database Connection:**
+- Ensure PostgreSQL container is running
+- Check DATABASE_URL in docker-compose.yml
+- Verify network connectivity between containers
 
-## Development
-- All secrets/config are managed via environment variables.
-- All endpoints have input validation and consistent error responses.
-- Contributions welcome!
+**Frontend API Errors:**
+- Confirm backend is accessible at http://localhost:8080
+- Check REACT_APP_API_URL environment variable
+- Verify JWT token is being sent with requests
 
-## License
-MIT 
+## 📄 License
+
+This project is licensed under the ISC License.
+
+---
+
+**Ready to manage your inventory! 🎉**
