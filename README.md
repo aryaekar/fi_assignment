@@ -27,16 +27,19 @@ A comprehensive backend API for inventory management built with Node.js, Express
 - **Docker Configuration** for backend deployment
 - **API Documentation** with interactive Swagger UI
 - **React Frontend** for testing and demonstration purposes
-- **Environment Configuration** for different deployment scenarios
 
 ## 🚀 Quick Start (Backend Focus)
 
 **Deploy the backend with Docker:**
 ```bash
 git clone <repository-url>
-cd inventory
+cd fi_assignment
 
 # Option 1: Backend only with external database
+# First, set up environment file
+cp backend/.env.example backend/.env
+# Edit backend/.env with your database credentials
+
 docker build -t inventory-backend .
 docker run -p 8080:8080 --env-file backend/.env inventory-backend
 
@@ -46,12 +49,25 @@ docker-compose up -d
 
 **Access the backend:**
 - 🔧 **Backend API**: http://localhost:8080
-- � **API Documentation**: http://localhost:8080/api-docs
+- 📚 **API Documentation**: http://localhost:8080/api-docs
 - 🌐 **Frontend Demo**: http://localhost:3000 (if using docker-compose)
 
 ## 🐳 Backend Docker Deployment
 
 ### Primary: Backend Container
+
+**Step 1: Environment Setup**
+```bash
+# Copy and configure environment file
+cp backend/.env.example backend/.env
+
+# Edit backend/.env with your values:
+# DATABASE_URL=postgresql://username:password@host:port/database
+# JWT_SECRET=your_super_secure_jwt_secret_key
+# PORT=8080
+```
+
+**Step 2: Build and Run**
 ```bash
 # Build the backend image
 docker build -t inventory-backend .
@@ -59,7 +75,7 @@ docker build -t inventory-backend .
 # Run with environment file
 docker run -p 8080:8080 --env-file backend/.env inventory-backend
 
-# Or run with environment variables
+# Alternative: Run with direct environment variables
 docker run -p 8080:8080 \
   -e DATABASE_URL="postgresql://user:pass@host:5432/db" \
   -e JWT_SECRET="your_secret" \
@@ -68,6 +84,8 @@ docker run -p 8080:8080 \
 ```
 
 ### Complete Stack (Backend + Database + Frontend)
+
+**No environment setup needed** - docker-compose handles everything:
 ```bash
 # Start all services including database and frontend demo
 docker-compose up -d
@@ -108,20 +126,6 @@ docker-compose down
 - `quantity`, `price`
 
 ## 🔧 Configuration
-
-### Environment Variables
-
-**Backend (.env):**
-```env
-DATABASE_URL=postgresql://username:password@host:port/database
-JWT_SECRET=your_jwt_secret_key
-PORT=8080
-```
-
-**Frontend (.env):**
-```env
-REACT_APP_API_URL=http://localhost:8080
-```
 
 ### Docker Compose Configuration
 The `docker-compose.yml` includes:
