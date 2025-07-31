@@ -94,6 +94,7 @@ export default function ProductList({ token }) {
   return (
     <div className="product-list-card" style={{ maxWidth: 1200, margin: '2.5rem auto' }}>
       <h2 className="product-list-title">Products</h2>
+      <h2 className="product-list-title">Click quantity to edit</h2>
       <button className="product-btn" style={{ marginBottom: 18 }} onClick={() => setShowModal(true)}>Add Product</button>
       <table className="product-table" style={{ width: '100%', margin: '0 auto' }}>
         <thead>
